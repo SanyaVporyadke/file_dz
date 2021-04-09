@@ -12,16 +12,22 @@ with open('purchase_log.txt', 'r', encoding='utf-8') as file:
             if key != 'user_id':
                 di[key] = value
 
+
 # Для каждого user_id в файле visit_log.csv определите третий столбец с категорией покупки
 # (если покупка была, сам файл visit_log.csv изменять не надо).
 #  Запишите в файл funnel.csv визиты из файла visit_log.csv, в которых были покупки с указанием категории.
 
+
 with open('visit_log.csv', 'r', encoding='utf-8') as f1:
     with open('funnel.csv', 'w') as f2:
-        for i, line in enumerate(f1):
-            for k, v in di.items():
-                print(line)
-            if i > 10:
-                break
+        for line in f1:
+            line = line.strip().split(',')
+            if line[0] in di.keys():
+                line.append(di[line[0]])
+                f2.write(json.dumps(line))
+                
+
+
+
 
                 
